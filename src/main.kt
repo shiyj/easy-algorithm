@@ -1,5 +1,6 @@
 fun main(args: Array<String>) {
-    fibonacciTest()
+//    fibonacciTest()
     println("===tree===")
-    treeTest()
+//    treeTest()
+    heapSortTest()
 }
