@@ -2,7 +2,7 @@ import java.util.*
 import kotlin.math.min
 
 fun mergeSortTest() {
-    val arr = intArrayOf(6, 5, 3, 9, 1, 8, 10, 7, 2, 4)
+    val arr = intArrayOf(6, 5, 3, 9, 1, 8, 10, 7, 2, 4, 13, 11, 12)
     var array = mergeSortRecursive(arr)
     println(Arrays.toString(array))
     array = mergeSort(arr)
@@ -10,12 +10,14 @@ fun mergeSortTest() {
 
 }
 
-fun mergeSort(arr: IntArray): IntArray {
+fun mergeSort(originArray: IntArray): IntArray {
+    var arr = originArray
     val count = arr.count()
     if (count < 2) {
         return arr
     }
-    val result = IntArray(count)
+    var result = IntArray(count)
+    var tmp: IntArray
     var i = 1
     while (i < count) {
         var j = 0
@@ -27,14 +29,12 @@ fun mergeSort(arr: IntArray): IntArray {
             merge(arr, start, mid, end, result)
             j = end + 1
         }
-
-        for ((key, value) in result.withIndex()) {
-            arr[key] = value
-        }
-
+        tmp = arr
+        arr = result
+        result = tmp
         i *= 2
     }
-    return result
+    return arr
 }
 
 /*
