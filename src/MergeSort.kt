@@ -1,11 +1,76 @@
 import java.util.*
+import kotlin.math.min
 
 fun mergeSortTest() {
-    val arr = intArrayOf(6, 5, 3, 1, 8, 7, 2, 4)
-    val array = mergeSortRecursive(arr)
+    val arr = intArrayOf(6, 5, 3, 9, 1, 8, 10, 7, 2, 4)
+    var array = mergeSortRecursive(arr)
     println(Arrays.toString(array))
+    array = mergeSort(arr)
+    println(Arrays.toString(array))
+
 }
 
+fun mergeSort(arr: IntArray): IntArray {
+    val count = arr.count()
+    if (count < 2) {
+        return arr
+    }
+    val result = IntArray(count)
+    var i = 1
+    while (i < count) {
+        var j = 0
+        while (j < count) {
+            val start = j
+            // 右侧数组的开始位置
+            val mid = min(j + i, count - 1)
+            val end = min(j + i * 2 - 1, count - 1)
+            merge(arr, start, mid, end, result)
+            j = end + 1
+        }
+
+        for ((key, value) in result.withIndex()) {
+            arr[key] = value
+        }
+
+        i *= 2
+    }
+    return result
+}
+
+/*
+ * 挪腾交换
+ */
+fun merge(arr: IntArray, start: Int, mid: Int, end: Int, result: IntArray) {
+
+    if (start == end) {
+        result[start] = arr[start]
+        return
+    }
+
+    var i = start
+    var j = mid
+    for (c in start..end) {
+        // 边界条件
+        if (j > end) {
+            result[c] = arr[i]
+            i += 1
+        } else if (i >= mid) {
+            result[c] = arr[j]
+            j += 1
+        } else if (arr[i] <= arr[j]) {
+            result[c] = arr[i]
+            i += 1
+        } else {
+            result[c] = arr[j]
+            j += 1
+        }
+    }
+
+}
+
+/*
+ * 空间复杂度较高的递归，用于理解算法
+ */
 fun mergeSortRecursive(arr: IntArray): IntArray {
     val count = arr.count()
     if (count <= 1) {
