@@ -6,23 +6,37 @@ fun main(args: Array<String>) {
 //    treeTest()
 //    heapSortTest()
 //    mergeSortTest()
-    quickSortTest()
+//    quickSortTest()
+    runSortTest({ quickSort(it) }, "quick sort")
+    runSortTest({ heapSort(it) }, "heap sort")
+    runSortTest({ mergeSort(it) }, "merge sort")
 
-    for (i in 0..10) {
-        val arrayCount = 100 + i
+}
+
+fun runSortTest(sort_fun: (arr: IntArray) -> Unit, name: String = "NOT SET") {
+    println()
+    println("====== " + name)
+    val maxCount = 10000
+    for (i in 1..maxCount) {
+        val arrayCount = i
 
         val array = createNoRepetitionRandomArray(arrayCount)
-        val originArr = array.copyOf()
         var resultArr = array.copyOf()
-        quickSort(resultArr)
-        checkResult(originArr, resultArr)
+        sort_fun(resultArr)
+        val progress = arrayCount.toFloat() / maxCount.toFloat()
+
+        if (!checkResult(array, resultArr, progress)) {
+            break
+        }
 
         resultArr = array.copyOf()
         addRepetition(resultArr)
-        quickSort(resultArr)
-        checkResult(originArr, resultArr)
+        sort_fun(resultArr)
+        if (!checkResult(array, resultArr, progress)) {
+            break
+        }
     }
-
+    println()
 }
 
 fun createNoRepetitionRandomArray(count: Int): IntArray {
@@ -49,11 +63,11 @@ fun addRepetition(array: IntArray) {
     while (i >= 0) {
         val j = (Math.random() * i).toInt()
         array[i] = array[j]
-        i = i/4 - 1
+        i = i / 4 - 1
     }
 }
 
-fun checkResult(originArr: IntArray, resultArr: IntArray) {
+fun checkResult(originArr: IntArray, resultArr: IntArray, progress: Float): Boolean {
     if (!checkResult(resultArr)) {
         println("-----Error Result:-----")
         println(Arrays.toString(resultArr))
@@ -61,11 +75,10 @@ fun checkResult(originArr: IntArray, resultArr: IntArray) {
         println(Arrays.toString(originArr))
         println()
         println()
+        return false
     } else {
-        println("-----SUCCESS-----")
-        println()
-        println()
-
+        print("\rProgress: %.2f%%".format(progress * 100))
+        return true
     }
 }
 

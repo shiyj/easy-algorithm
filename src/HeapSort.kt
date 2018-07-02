@@ -67,5 +67,4 @@ fun heapSort(array: IntArray) {
         swap(array, 0, i - 1)
         adjustHeap(array, 0, i - 1)
     }
-    println(Arrays.toString(array))
 }
