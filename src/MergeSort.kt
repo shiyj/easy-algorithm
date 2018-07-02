@@ -2,20 +2,21 @@ import java.util.*
 import kotlin.math.min
 
 fun mergeSortTest() {
-    val arr = intArrayOf(6, 5, 3, 9, 1, 8, 10, 7, 2, 4, 13, 11, 12)
-    var array = mergeSortRecursive(arr)
+    val arr = intArrayOf(14, 6, 15, 3, 9, 1, 8, 10, 7, 2, 4, 13, 11, 12, 5)
+    val array = mergeSortRecursive(arr.copyOf())
     println(Arrays.toString(array))
-    array = mergeSort(arr)
-    println(Arrays.toString(array))
-
+    mergeSort(arr)
+    println(Arrays.toString(arr))
 }
 
-fun mergeSort(originArray: IntArray): IntArray {
+fun mergeSort(originArray: IntArray) {
+    // arr仅为一个指针，没有内存分配
     var arr = originArray
     val count = arr.count()
     if (count < 2) {
-        return arr
+        return
     }
+    // 开辟等量内存块存放临时数据
     var result = IntArray(count)
     var tmp: IntArray
     var i = 1
@@ -29,12 +30,21 @@ fun mergeSort(originArray: IntArray): IntArray {
             merge(arr, start, mid, end, result)
             j = end + 1
         }
+
         tmp = arr
         arr = result
         result = tmp
         i *= 2
     }
-    return arr
+
+    // 计算出了结果，将其写回原数据，如果刚好i是2的偶数次方合并，不需要交换
+    if (arr != originArray) {
+        for (i in arr.indices) {
+            originArray[i] = arr[i];
+        }
+    }
+
+    return
 }
 
 /*
