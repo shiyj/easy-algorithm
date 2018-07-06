@@ -18,12 +18,11 @@ fun runSortTest(sort_fun: (arr: IntArray) -> Unit, name: String = "NOT SET") {
     println("====== " + name)
     val maxCount = 10000
     for (i in 1..maxCount) {
-        val arrayCount = i
 
-        val array = createNoRepetitionRandomArray(arrayCount)
+        val array = createNoRepetitionRandomArray(i)
         var resultArr = array.copyOf()
         sort_fun(resultArr)
-        val progress = arrayCount.toFloat() / maxCount.toFloat()
+        val progress = i.toFloat() / maxCount.toFloat()
 
         if (!checkResult(array, resultArr, progress)) {
             break
