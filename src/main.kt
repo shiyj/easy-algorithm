@@ -1,15 +1,17 @@
+import Algorithm.Others.euclideanTest
 import java.util.*
 
 fun main(args: Array<String>) {
 
+    euclideanTest()
 //    fibonacciTest()
 //    treeTest()
 //    heapSortTest()
 //    mergeSortTest()
 //    quickSortTest()
-    runSortTest({ quickSort(it) }, "quick sort")
-    runSortTest({ heapSort(it) }, "heap sort")
-    runSortTest({ mergeSort(it) }, "merge sort")
+//    runSortTest({ quickSort(it) }, "quick sort")
+//    runSortTest({ heapSort(it) }, "heap sort")
+//    runSortTest({ mergeSort(it) }, "merge sort")
 
 }
 

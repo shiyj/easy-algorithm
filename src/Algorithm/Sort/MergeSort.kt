@@ -38,9 +38,9 @@ fun mergeSort(originArray: IntArray) {
     }
 
     // 计算出了结果，将其写回原数据，如果刚好i是2的偶数次方合并，不需要交换
-    if (arr != originArray) {
-        for (i in arr.indices) {
-            originArray[i] = arr[i];
+    if (arr !== originArray) {
+        for (k in arr.indices) {
+            originArray[k] = arr[k]
         }
     }
 
